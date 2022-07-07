@@ -1,0 +1,12 @@
+package user
+
+import com.vivian.drools.entity.User
+
+rule "rule_1"
+    when
+        $user:User(age < 100)
+    then
+        $user.setMatCode("MAT" + $user.getAge());
+        System.out.println("成功匹配到规则1,推荐产品");
+        System.out.println($user);
+end

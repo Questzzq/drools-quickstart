@@ -1,0 +1,62 @@
+package book.discount
+
+import com.vivian.drools.entity.Order
+
+// 所购图书总价在100元以下的没有优惠
+rule "book_discount_1"
+    when
+        // 模式匹配，到规则引擎中（工作内存）查找order对象
+        $order:Order(originalPrice < 100)
+    then
+        $order.setRealPrice($order.getOriginalPrice());
+        System.out.println("成功匹配到规则1,没有优惠");
+        System.out.println($order);
+end
+
+// 所购图书总价在100元-200元优惠20元
+rule "book_discount_2"
+    when
+        // 模式匹配，到规则引擎中（工作内存）查找order对象
+        $order:Order(originalPrice >= 100 && originalPrice < 200)
+    then
+        $order.setRealPrice($order.getOriginalPrice() - 20);
+        System.out.println("成功匹配到规则2，优惠20元");
+        System.out.println($order);
+end
+
+// 所购图书总价在200元-300元优惠50元
+rule "book_discount_3"
+    when
+        // 模式匹配，到规则引擎中（工作内存）查找order对象
+        $order:Order(originalPrice >= 200 && originalPrice < 300)
+    then
+        $order.setRealPrice($order.getOriginalPrice() - 50);
+        System.out.println("成功匹配到规则3，优惠50元");
+        System.out.println($order);
+end
+
+// 所购图书总价在300元以上的优惠100元
+rule "book_discount_5"
+    when
+        // 模式匹配，到规则引擎中（工作内存）查找order对象
+        $order:Order(originalPrice >= 300)
+    then
+        $order.setRealPrice($order.getOriginalPrice() - 100);
+        System.out.println("成功匹配到规则4，优惠100元");
+        System.out.println($order);
+end
+
+/**
+ 所购图书总价在350元以上的优惠150元
+ 如果originPrice = 398,规则4,5都会符合
+ 二者都会执行
+**/
+rule "book_discount_4"
+    when
+        // 模式匹配，到规则引擎中（工作内存）查找order对象
+        $order:Order(originalPrice >= 300)
+    then
+        $order.setRealPrice($order.getOriginalPrice() - 150);
+        System.out.println("成功匹配到规则5，优惠150元");
+        System.out.println($order);
+end
