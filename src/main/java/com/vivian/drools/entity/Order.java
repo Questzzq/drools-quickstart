@@ -13,6 +13,12 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class Order {
+    private String name;
+    private String country;
     private Double originalPrice;
     private Double realPrice;
+
+    public static boolean isChinese(String country) {
+        return "chinese".equals(country);
+    }
 }

@@ -46,6 +46,17 @@ rule "book_discount_5"
         System.out.println($order);
 end
 
+// 是不是中国文学，测试多条件判断
+rule "RUL00000001"
+    when
+        // 模式匹配，到规则引擎中（工作内存）查找order对象
+        $order:Order(!(isChinese($order.country) || isChinese($order.name)))
+    then
+        $order.setRealPrice($order.getOriginalPrice() - 100);
+        System.out.println("成功匹配到规则book_is_not__chinese");
+        System.out.println($order);
+end
+
 /**
  所购图书总价在350元以上的优惠150元
  如果originPrice = 398,规则4,5都会符合
